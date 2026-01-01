@@ -1,5 +1,5 @@
 <?php
-require_once "../conexion.php";
+require_once "../database.php";
 
 $sql = "SELECT * FROM empleados";
 $resultado = $db->query($sql);

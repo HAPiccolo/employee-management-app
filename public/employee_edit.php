@@ -1,5 +1,9 @@
 <?php
 require_once "../database.php";
+require_once "../models/Employee.php";
+require_once "../models/EmployeeRepository.php";
+
+$employeeRepository = new EmployeeRepository($db);
 
 /* obtener ID */
 $employeeID = $_GET['id'] ?? null;
@@ -19,12 +23,11 @@ FROM empleados e
 WHERE e.id_empleado = :id
 ";
 
-$stmt = $db->prepare($sqlEmployee);
-$stmt->execute([':id'=> $employeeID]);
-$employee = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$employee = $employeeRepository->findById($employeeID);
 
 if (!$employee) {
- die("Employee not found");
+    die("Employee not found");
 }
 
 /* Traer deptos */
@@ -84,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <label>Departamento: </label><br>
     <select name="id_departamento" required>
         <?php foreach ($departments as $d): ?>
-            <option value="<?= $d['id_departamento'] ?>">
+            <option value="<?= $d['id_departamento'] ?>"
                 <?= $d['id_departamento'] == $employee['id_departamento'] ? 'selected' : '' ?>>
                 <?= $d['nombre'] ?>
         </option>

@@ -1,23 +1,11 @@
 <?php
-require_once "../conexion.php";
+require_once "../database.php";
+require_once "../models/EmployeeRepository.php";
 
-/*Traer empleados con departamento */
-$sql = "
-SELECT
-   e.id_empleado,
-e.nombre,
-e.puesto,
-e.salario,
-d.nombre AS departamento
-FROM empleados AS e
-    LEFT JOIN departamento AS d 
-    ON e.id_departamento = d.id_departamento
-";
-
-$stmt = $db->prepare($sql);
-$stmt->execute();
-$empleados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$employeeRepository = new EmployeeRepository($db);
+$employees = $employeeRepository->findAll();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -29,7 +17,7 @@ $empleados = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <body>
         <h2>Lista de empleados</h2>
         
-        <a href="empleados_nuevo.php" class="btn-nuevo">
+        <a href="employee_new.php" class="btn-nuevo">
              ➕ Nuevo empleado
         </a>
         <br><br>
@@ -43,16 +31,16 @@ $empleados = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <th>Acciones</th>
             </tr>
 
-            <?php foreach ($empleados as $e): ?>
+            <?php foreach ($employees as $employee): ?>
                 <tr>
-                    <td><?= $e['nombre'] ?></td>
-                    <td><?= $e['puesto'] ?></td>
-                    <td><?= $e['salario'] ?></td>
-                    <td><?= $e['departamento'] ?></td>
+                    <td><?= $employee['nombre'] ?></td>
+                    <td><?= $employee['puesto'] ?></td>
+                    <td><?= $employee['salario'] ?></td>
+                    <td><?= $employee['departamento'] ?></td>
                 <td>
-                    <a href="empleados_editar.php?id=<?= $e['id_empleado'] ?>"> ✏️ Editar</a>
+                    <a href="employee_edit.php?id=<?= $employee['id_empleado'] ?>"> ✏️ Editar</a>
 
-                    <a href="empleados_eliminar.php?id=<?= $e['id_empleado'] ?>"
+                    <a href="employee_delete.php?id=<?= $e['id_empleado'] ?>"
                     onclick="return confirm('¿Seguro que quiere eliminar este empleado?')">
                     🗑️ Eliminar
                 </a>

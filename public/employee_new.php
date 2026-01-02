@@ -1,5 +1,5 @@
 <?php
-require_once "../conexion.php";
+require_once "../database.php";
 
 
 /* Traer deptos */
@@ -18,7 +18,7 @@ $departamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <h2>Alta de empleado</h2>
 
-    <form action="empleados_guardar.php" method="post">
+    <form action="employee_save.php" method="post">
 
     <label>Nombre:</label><br>
     <input type="text" name="nombre" required><br><br>

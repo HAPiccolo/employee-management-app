@@ -1,17 +1,18 @@
 <?php
-require_once "../conexion.php";
+require_once "../database.php";
+
 
 if (!isset($_GET['id'])) {
-    die("ID no recibido");
+    die("Invalid ID");
 }
 
 $id = $_GET['id'];
 
 $sql = "DELETE FROM empleados WHERE id_empleado = :id";
 $stmt = $db->prepare($sql);
-$stmt->execute([':id' => $id]);
+$stmt->execute([':id' => $employeeID]);
 
-header("Location: empleados_listar.php");
+header("Location: employee_list.php");
 exit;
 
 ?>

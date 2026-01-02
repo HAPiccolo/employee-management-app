@@ -1,5 +1,5 @@
 <?php
-require_once "../conexion.php";
+require_once "../database.php";
 
 $nombre = $_POST['nombre'];
 $puesto = $_POST['puesto'];

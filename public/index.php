@@ -2,7 +2,7 @@
 require_once "../database.php";
 
 $sql = "SELECT * FROM empleados";
-$resultado = $db->query($sql);
+$employees = $db->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -23,13 +23,13 @@ $resultado = $db->query($sql);
                 <th>Departamento</th>
             </tr>
 
-            <?php foreach ($resultado as $fila): ?>
+            <?php foreach ($employees as $employee): ?>
                 <tr>
-                    <td><?= $fila['id_empleado'] ?></td>
-                    <td><?= $fila['nombre'] ?></td>
-                    <td><?= $fila['puesto'] ?></td>
-                    <td><?= $fila['salario'] ?></td>
-                    <td><?= $fila['id_departamento'] ?></td>
+                    <td><?= $employee['id_empleado'] ?></td>
+                    <td><?= $employee['nombre'] ?></td>
+                    <td><?= $employee['puesto'] ?></td>
+                    <td><?= $employee['salario'] ?></td>
+                    <td><?= $employee['id_departamento'] ?></td>
                 </tr>
                 <?php endforeach; ?>
         </table>
